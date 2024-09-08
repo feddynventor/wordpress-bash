@@ -5,7 +5,29 @@ This tool maps any WordPress website to your predefined tree structure
 a tree of files is ideal to store your content in a pretty organized way.
 Thanks file system =D
 
-Each subdirectory contains a `.config` file which contains a list of WordPress category IDs, plus other metadata
+Each subdirectory can contain:
+- a `.config` file which specifies a list of WordPress category IDs, plus other directives
+- other subdirectories
+- both
+
+```md
+data
+├── 7
+├── Genres
+│   ├── 11
+│   ├── 12
+│   └── 13
+├── Sport
+│   ├── 20
+│   └── Highlights
+│       └── 21
+└── Talkshows
+    ├── Talk A
+    │   └── 83
+    └── Talk C
+        ├── 12
+        └── 32
+```
 
 ## data/ folder
 This is the root of your submenus structure. So start making some `directories`!
@@ -46,14 +68,14 @@ Either one of those is required
 }
 ```
 
-### API Link
+## API Link
 `DOMAIN= DAYS= LIMIT= wget \
     $DOMAIN/wp-json/wp/v2/posts\ \
     ?_fields\=id,date,modified,title,categories,acf,featured_media \
     &after\="$(date --date '$DAYS days ago' --iso-8601)"T00:00:00 \
     &per_page=${LIMIT} \
     &page=1 \
-    -O posts.json`
+    | jq`
 
-### TODO
+## TODO
 The page management is not implemented, so it's possible to gather maximum 100 posts per category (as explained with the `id` field)
