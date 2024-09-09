@@ -9,3 +9,5 @@ DATA_DIR=$(pwd)/data/
 find $DATA_DIR -name ".config" -printf '%h\n' | while read DIR; do
   ./fetch.sh "$DIR" "$1"
 done
+
+./dir_to_json.sh $DATA_DIR
