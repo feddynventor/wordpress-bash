@@ -7,12 +7,15 @@ function load_sublevel {
     KEY=$( echo "$DIR" | sed "s/\.\///" )
     SUB_DIR="$( echo "$KEY" | sed 's/\(.*\)\//\1\n/' | tail -n1 )"
 
+    META=$( jq --compact-output 'del(.id) | del(.max) | del(.days)' "$DIR/.config" 2>/dev/null)
+    if [ -z $META ]; then META="{}"; fi
+
     SUB=$( load_sublevel "$DIR" | jq --compact-output --slurp )
 
     cat "$DIR"/* 2>/dev/null \
     | jq '.[] | select(.!=null)' \
     | jq --compact-output --slurp 'sort_by(.date)' \
-    | jq --compact-output --arg k "$SUB_DIR" --argjson v "$SUB" '{$k:[$v[],.[]]}'
+    | jq --compact-output --arg k "$SUB_DIR" --argjson v "$SUB" --argjson m "$META" '{$k:{meta:$m,items:[$v[],.[]]}}'
 
     
   done
