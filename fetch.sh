@@ -49,7 +49,7 @@ jq -c '.id[]' "$1/.config" | while read SET; do
   fi
 
   URL=$( posts_url "$ID" "$DAYS" "$MAX" "$EXCLUDE" )
-  RESPONSE=$( wget "$URL" -O - )
+  RESPONSE=$( wget --no-verbose "$URL" -O - )
 
   if [ ! -z $NAME ]; then
     printf "$RESPONSE" | jq --arg k $( echo "$NAME" | tr -d '"' ) '.[] += {"main_category" : $k}' > $1/$ID
