@@ -13,24 +13,26 @@ Each subdirectory can contain:
 ```md
 data
 ├── 7
-├── Genres
+├── 1_Genres
 │   ├── 11
 │   ├── 12
 │   └── 13
-├── Sport
+├── 2_Sport
 │   ├── 20
-│   └── Highlights
+│   └── 1_Highlights
 │       └── 21
-└── Talkshows
-    ├── Talk A
+└── 3_Talkshows
+    ├── 1_Talk A
     │   └── 83
-    └── Talk C
+    └── 2_Talk C
         ├── 12
         └── 32
 ```
 
 ## data/ folder
 This is the root of your submenus structure. So start making some `directories`!
+
+Make sure to name them starting with the prefix `N_`. This will guarantee your sorting order, achieved with a simple `sort` on a simple `find` output.
 
 Where you want your items to be, place a `.config`
 
